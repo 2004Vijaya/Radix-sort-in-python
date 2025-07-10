@@ -1,0 +1,49 @@
+def count_sort(arr,exp):
+    n=len(arr)
+    output=[0]*n
+    count=[0]*10  #0 to 9 empty buckets for count of digits
+    for i in range(n):  #frequencies of units position of numbers
+        index=(arr[i]//exp)%10
+        count[index]+=1
+    for i in range(1,10):
+        count[i]+=count[i-1]
+    i=n-1
+    while i>=0:
+        index=(arr[i]//exp)%10
+        output[count[index]-1]=arr[i]
+        count[index]-=1
+        i-=1
+    for i in range(n):
+        arr[i]=output[i]
+def radix_sort(arr):
+    max_num=max(arr)
+    exp=1
+    while max_num//exp>0:
+        count_sort(arr,exp)
+        exp*=10
+size=int(input("enter the number of elements:"))
+print("Enter ",size,"elemets....")
+arr=[]
+for _ in range(size):
+    arr.append(int(input()))
+print("Before Sort:",arr)
+radix_sort(arr)
+print("After Sort:",arr)
+
+output:
+
+enter the number of elements: 10
+Enter  10 elemets....
+ 8
+ 11
+ 530
+ 231
+ 432
+ 045
+ 677
+ 88
+ 90
+ 199
+Before Sort: [8, 11, 530, 231, 432, 45, 677, 88, 90, 199]
+After Sort: [8, 11, 45, 88, 90, 199, 231, 432, 530, 677]
+
